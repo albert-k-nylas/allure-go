@@ -42,13 +42,18 @@ func SkipTest(t *testing.T, testOptions ...Option) {
 		option(r)
 	}
 
-	currentHash := getSha256(r.Labels, r.FullName)
 	before, _, found := strings.Cut(t.Name(), "#")
+	if !found {
+		r.FullName = t.Name()
+	} else {
+		r.FullName = before
+	}
 	if !found {
 		r.TestCaseID = t.Name()
 	} else {
 		r.TestCaseID = before
 	}
+	currentHash := getSha256(r.Labels, r.FullName)
 	r.HistoryID = currentHash
 
 	getCurrentTestPhaseObject(t).Test = r
@@ -94,13 +99,18 @@ func Test(t *testing.T, testOptions ...Option) {
 		r.Test = func() {}
 	}
 
-	currentHash := getSha256(r.Labels, r.FullName)
 	before, _, found := strings.Cut(t.Name(), "#")
+	if !found {
+		r.FullName = t.Name()
+	} else {
+		r.FullName = before
+	}
 	if !found {
 		r.TestCaseID = t.Name()
 	} else {
 		r.TestCaseID = before
 	}
+	currentHash := getSha256(r.Labels, r.FullName)
 	r.HistoryID = currentHash
 
 	defer func() {
