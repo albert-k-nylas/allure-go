@@ -1,7 +1,7 @@
 package example
 
 import (
-	"github.com/dailymotion/allure-go"
+	"github.com/albert-k-nylas/allure-go"
 	"testing"
 )
 
