@@ -95,7 +95,12 @@ func Test(t *testing.T, testOptions ...Option) {
 	}
 
 	currentHash := getSha256(r.Labels, r.FullName)
-	r.TestCaseID = currentHash
+	before, _, found := strings.Cut(t.Name(), "#")
+	if !found {
+		r.TestCaseID = t.Name()
+	} else {
+		r.TestCaseID = before
+	}
 	r.HistoryID = currentHash
 
 	defer func() {
